@@ -1,3 +1,4 @@
+
 from bs4 import BeautifulSoup
 import requests
 from fpdf import FPDF
@@ -39,12 +40,12 @@ for main_element in element_main:
         print(expertise)
         print(yok_ID)
 
-        pdf.cell(55, 10, txt= institution, ln=True)
-        pdf.cell(55, 10, txt="Ünvan: " + title, ln=True)
-        pdf.cell(55, 10, txt="Ad: " + name, ln=True)
-        pdf.cell(55, 10, txt= expertise, ln=True)
-        pdf.cell(55, 10, txt= yok_ID, ln=True)
-        pdf.cell(55, 10, txt="", ln=True)  # Satır boşluğu ekleyerek bir sonraki profili ayır
+        pdf.cell(200, 10, txt= institution, ln=True)
+        pdf.cell(200, 10, txt="Ünvan: " + title, ln=True)
+        pdf.cell(200, 10, txt="Ad: " + name, ln=True)
+        pdf.cell(200, 10, txt= expertise, ln=True)
+        pdf.cell(200, 10, txt= yok_ID, ln=True)
+        pdf.cell(200, 10, txt="", ln=True)  # Satır boşluğu ekleyerek bir sonraki profili ayır
 
 
 
@@ -73,28 +74,39 @@ for link_num in range(1,int(last_page_text) + 1):
 
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    announcements_div = soup.find_all('div',class_='news-section-card-right')
-    print('Dönen Veri Miktarı = ',len(announcements_div))
 
-    for element in announcements_div:
-        title = element.find('div', class_='news-section-card-right-title').get_text(strip=True)
-        content = element.find('div',class_='news-section-card-right-explanation').get_text(strip=True)
-        date = element.find('div',class_='news-section-card-left-date').get_text(strip=True).replace("\n", "").replace(" ", "")
-        print("Title",title)
-        print("Content:",content)
-        print("Date:",date)
-        print(link_num)
-        print("\n")
+    element_main = soup.select('.news-section-card.mb-3')
 
-        pdf.cell(75, 10, txt="Title: " + title, ln=True)
-        pdf.cell(75, 10, txt="Content: " + content, ln=True)
-        pdf.cell(75, 10, txt= "Date: " + date, ln=True)
-        pdf.cell(75, 10, txt="", ln=True)  # Satır boşluğu ekleyerek bir sonraki profili ayır
+    for main_element in element_main:
+        # Bağlantı URL'sini bulma
+        link_elements = main_element.find_all('a')
+        for link_element in link_elements:
+            link_url = link_element.get('href')
+
+            # Bağlantıya istek yapma
+            inner_response = requests.get(link_url, verify=False)
+            inner_soup = BeautifulSoup(inner_response.text, 'html.parser')
+
+            # Gerekli bilgileri çekme
+            annoc_div = inner_soup.find('div', class_='index-content-info')
+            date = annoc_div.find('div', class_='new-section-detail-date').get_text(strip=True).replace(" ", "").replace("\n", "")
+            title = annoc_div.find('div', class_='new-section-detail-title').get_text(strip=True)
+            content = annoc_div.find('div', class_='new-section-detail-explanation').get_text(strip=True)
+
+            print(date)
+            print(title)
+            print(content)
+            print("\n")
+
+            pdf.cell(200, 10, txt="Title: " + title, ln=True)
+            pdf.cell(200, 10, txt="Content: " + content, ln=True)
+            pdf.cell(200, 10, txt= "Date: " + date, ln=True)
+            pdf.cell(200, 10, txt="", ln=True)  # Satır boşluğu ekleyerek bir sonraki profili ayır
 
 
 
 # PDF dosyasını kaydet
-pdf_file_path = "D:/GitHub/RAG_ChatBot_Using_Gemini/faculty_information1.pdf"
+pdf_file_path = "D:/GitHub/RAG_ChatBot_Using_Gemini/faculty_information2.pdf"
 pdf.output(pdf_file_path)
 
 print("PDF dosyası oluşturuldu:", pdf_file_path)
