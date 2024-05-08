@@ -1,4 +1,3 @@
-
 from bs4 import BeautifulSoup
 import requests
 from fpdf import FPDF
@@ -101,11 +100,9 @@ for link_num in range(1,int(last_page_text) + 1):
             pdf.cell(200, 10, txt="Title: " + title, ln=True)
             pdf.cell(200, 10, txt="Content: " + content, ln=True)
             pdf.cell(200, 10, txt= "Date: " + date, ln=True)
-            pdf.cell(200, 10, txt="", ln=True)  # Satır boşluğu ekleyerek bir sonraki profili ayır
+            pdf.cell(200, 10, txt="", ln=True)  
 
-
-
-# PDF dosyasını kaydet
+# PDF dosyasını kaydetme
 pdf_file_path = "D:/GitHub/RAG_ChatBot_Using_Gemini/faculty_information2.pdf"
 pdf.output(pdf_file_path)
 

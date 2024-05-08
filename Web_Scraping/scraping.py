@@ -8,7 +8,7 @@ response = requests.get(url, verify=False)
 soup = BeautifulSoup(response.text, 'html.parser')
 pdf = FPDF()
 pdf.add_page()
-pdf.add_font("ArialUnicode", fname=r"C:\Users\burak\Downloads\ArialUnicodeMSRegular\ArialUnicodeMSRegular.ttf")        
+pdf.add_font("ArialUnicode", fname=r"C:/Users/burak/Downloads/ArialUnicodeMSRegular/ArialUnicodeMSRegular.ttf")        
 pdf.set_font("ArialUnicode", size=12)  # Bu satır eklenmiş
 
 
