@@ -12,6 +12,9 @@ from datetime import datetime
 import io
 from dotenv import load_dotenv
 
+
+# File yüklenir ve parçalanır
+# Vektörlere bölünür ve vektor db ye kayıt edilir0
 async def upload_documents(user: User, files: list[UploadFile]) -> tuple[str, int]:
     text = await _extract_text_from_document(files)
     chunks = await _chunk_text(text)
@@ -56,6 +59,7 @@ async def _create_embeddings_and_save(user: User, chunks: any) -> FAISS:
         pickle.dump(vector_store, f)
     return vector_store
 
+# Kullanıcı adına göre vektör db den getiriliyor
 async def ask_question(user: User, question: str, api_key: str) -> tuple[str, int]:
     username = user.username
     vector_store = await _get_vector_file(username)
@@ -87,6 +91,7 @@ async def _get_vector_file(username: str)-> any:
         vector_store = pickle.load(f)
     return vector_store
 
+# Log kaydı oluşturuluyor
 async def _log(user: User, question: str, system_message: str, retrieved_chunks:str, answer: str):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     username = user.username

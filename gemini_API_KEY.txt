@@ -1,3 +1,7 @@
 AIzaSyC_NFugLx75aVxxu8m0uuiFaIa7WvD64kA
-AIzaSyC4D2fa6J7dPiF06yA8N2oeZYNECLCMJD0
+
+gemini_apı="AIzaSyC4D2fa6J7dPiF06yA8N2oeZYNECLCMJD0"
+
 https://github.com/cbarkinozer/free-rag/tree/main
+
+cloud_apı="AIzaSyCc6FWkmU6_bhhRwgXO3szqULjsNz4uzUM"
