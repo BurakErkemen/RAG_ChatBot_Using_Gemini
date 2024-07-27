@@ -69,6 +69,7 @@ uvicorn_process = None
 def run_fastapi():
     global uvicorn_process
     if uvicorn_process is None:
+        # Problem olursa 5000=> 8000
         uvicorn_process = subprocess.Popen(["uvicorn", "app:app", "--host", "127.0.0.1", "--port", "8000"])
         print("FastAPI server has been started.")
 
